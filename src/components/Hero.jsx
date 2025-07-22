@@ -11,17 +11,17 @@ const Hero = () => {
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
       <div className="relative z-10 max-w-3xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold mb-6">
-          Find Your Long-Term Room in Uganda
-        </h2>
+        <h3 className="text-3xl md:text-3xl font-bold mb-6">
+          Find Your Perfect Room Easily
+        </h3>
         <p className="mb-8 text-lg">
-          Whether you're a student, employee, or traveler — discover a perfect space to stay for months or even years.
+          Whether you're a student, employee, or traveler — discover a perfect space to stay offered at unbelievable Prices.
         </p>
         <a
           href="/browse"
-          className="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition"
-        >
-          Browse Available Rooms
+          className="border-2 border-white text-lg text-white px-3 py-2 hover:bg-white hover:bg-opacity-10 rounded-md transition bg-transparent"
+        > 
+          Browse Rooms
         </a>
       </div>
     </section>

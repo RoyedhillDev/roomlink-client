@@ -21,7 +21,13 @@ const RoomCard = ({ room }) => {
         <h3 className="text-lg font-semibold text-blue-800">{room.title}</h3>
         <p className="text-gray-600">{room.location}</p>
         <p className="text-green-700 font-bold mt-2">UGX {room.price.toLocaleString()}</p>
+        <div><button className="bg-yellow-600 hover:bg-yellow-500 text-white px-4 py-2 my-2 rounded-md text-sm font-medium transition-colors">
+            See Details
+          </button></div>
+        
       </div>
+
+      
     </div>
   );
 };

@@ -18,8 +18,8 @@ const BrowseHero = () => {
           Specify the desired place where you are looking to get a room, just adjust a few things and you're ready!
         </p>
         <a
-          href="/browse"
-          className="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition"
+          href="/postaroom"
+          className="border-2 border-white text-lg text-white px-3 py-2 hover:bg-white hover:bg-opacity-10 rounded-md transition bg-transparent"
         >
           Post A Room
         </a>
