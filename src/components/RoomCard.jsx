@@ -1,35 +1,116 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import RoomCard from '../components/RoomCard';
+import BrowseHero from '../components/BrowseHero';
+import axios from 'axios';
 
-const RoomCard = ({ room }) => {
+const Browse = () => {
+  const [rooms, setRooms] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [maxPrice, setMaxPrice] = useState(300000);
+  const [location, setLocation] = useState('');
+  const [onlyAvailable, setOnlyAvailable] = useState(false);
+
+  // ✅ Fetch rooms from backend
+  useEffect(() => {
+    const fetchRooms = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/rooms');
+        setRooms(res.data);
+      } catch (err) {
+        console.error('Error fetching rooms:', err);
+      }
+    };
+    fetchRooms();
+  }, []);
+
+  // ✅ Clean and filter rooms
+  const filteredRooms = rooms
+    .map(room => ({
+      ...room,
+      image: room.images?.[0] || 'https://via.placeholder.com/300x200?text=No+Image',
+      available: room.available ?? true, // default to true if missing
+      area: room.area ?? '', // optional if used in filters
+    }))
+    .filter(room => {
+      const matchesSearch =
+        room.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        room.location?.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesPrice = room.price <= maxPrice;
+      const matchesLocation = location === '' || room.area.toLowerCase() === location.toLowerCase();
+      const matchesAvailability = !onlyAvailable || room.available;
+
+      return matchesSearch && matchesPrice && matchesLocation && matchesAvailability;
+    });
+
   return (
-    <div className="bg-white shadow-md rounded-md overflow-hidden">
-      <div className="relative">
-        <img
-          src={room.image}
-          alt={room.title}
-          className="w-full h-48 object-cover"
-        />
-        <span 
-          className={`absolute top-2 right-2 px-2 py-1 rounded-md text-xs font-medium text-white ${
-            room.available ? 'bg-green-500' : 'bg-red-500'
-          }`}
-        >
-          {room.available ? 'Available' : 'Not Available'}
-        </span>
-      </div>
-      <div className="p-4">
-        <h3 className="text-lg font-semibold text-blue-800">{room.title}</h3>
-        <p className="text-gray-600">{room.location}</p>
-        <p className="text-green-700 font-bold mt-2">UGX {room.price.toLocaleString()}</p>
-        <div><button className="bg-yellow-600 hover:bg-yellow-500 text-white px-4 py-2 my-2 rounded-md text-sm font-medium transition-colors">
-            See Details
-          </button></div>
-        
+    <>
+      <div className="text-center mt-0 text-2xl text-blue-800">
+        <BrowseHero />
       </div>
 
-      
-    </div>
+      <div className="max-w-6xl mx-auto px-4 py-10">
+        <h2 className="text-3xl font-bold text-center text-blue-800 mb-8">Browse Available Rooms</h2>
+
+        {/* Filters Section */}
+        <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-4">
+          <input
+            type="text"
+            placeholder="Search by title or area..."
+            className="px-4 py-2 border border-gray-300 rounded-md"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Max Price: {maxPrice.toLocaleString()} UGX
+            </label>
+            <input
+              type="range"
+              min="100000"
+              max="500000"
+              step="50000"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(Number(e.target.value))}
+              className="w-full"
+            />
+          </div>
+
+          <select
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded-md"
+          >
+            <option value="">All Locations</option>
+            <option value="Makerere">Makerere</option>
+            <option value="Kyambogo">Kyambogo</option>
+            <option value="MUBS">MUBS</option>
+          </select>
+
+          <label className="inline-flex items-center mt-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={onlyAvailable}
+              onChange={(e) => setOnlyAvailable(e.target.checked)}
+              className="mr-2"
+            />
+            Only Available
+          </label>
+        </div>
+
+        {/* Room Cards */}
+        {filteredRooms.length > 0 ? (
+          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {filteredRooms.map((room) => (
+              <RoomCard key={room._id} room={room} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-gray-500">No rooms match your filters.</p>
+        )}
+      </div>
+    </>
   );
 };
 
-export default RoomCard;
+export default Browse;
