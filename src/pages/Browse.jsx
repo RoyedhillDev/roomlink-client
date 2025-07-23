@@ -14,21 +14,18 @@ const Browse = () => {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/rooms');
-
-        const normalized = res.data.map((room) => ({
+        const response = await axios.get("http://localhost:5000/api/rooms");
+        const formattedRooms = response.data.map((room) => ({
           ...room,
-          image: `http://localhost:5000/${room.images[0]}`, // Assumes images like "uploads/room1.jpg"
+          image: `http://localhost:5000${room.images[0]}`,
         }));
-
-        setRooms(normalized);
-        console.log('✅ Fetched Rooms:', normalized);
-      } catch (err) {
-        console.error('❌ Error fetching rooms:', err);
+        setRooms(formattedRooms);
+      } catch (error) {
+        console.error("Error fetching rooms: ", error);
       }
     };
 
-    fetchRooms();
+    fetchRooms(); // run only once
   }, []);
 
   const filteredRooms = rooms.filter((room) => {
@@ -70,7 +67,7 @@ const Browse = () => {
             </label>
             <input
               type="range"
-              min="100000"
+              min="50000"
               max="500000"
               step="50000"
               value={maxPrice}
