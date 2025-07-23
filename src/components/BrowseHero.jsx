@@ -1,3 +1,4 @@
+// BrowseHero.jsx
 const BrowseHero = () => {
   return (
     <section
@@ -7,7 +8,6 @@ const BrowseHero = () => {
           "url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=80')",
       }}
     >
-      {/* Overlay */}
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
       <div className="relative z-10 max-w-3xl mx-auto">
@@ -15,7 +15,8 @@ const BrowseHero = () => {
           Locate Your Room Quickly
         </h2>
         <p className="mb-8 text-lg">
-          Specify the desired place where you are looking to get a room, just adjust a few things and you're ready!
+          Specify the desired place where you are looking to get a room, just
+          adjust a few things and you're ready!
         </p>
         <a
           href="/postaroom"
