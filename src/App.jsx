@@ -7,9 +7,6 @@ import About from './pages/About';
 import PostRoom from './pages/PostaRoom';
 import ViewRooms from './pages/ViewRooms';
 
-<Route path="/rooms" element={<ViewRooms />} />
-
-
 function App() {
   return (
     <BrowserRouter>
@@ -17,14 +14,15 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/browse" element={<Browse />} />  {/* ✅ Add this line */}
+          <Route path="/browse" element={<Browse />} />
           <Route path="/postaroom" element={<PostRoom />} />
-          {/* Add more routes here */}
+          <Route path="/rooms" element={<ViewRooms />} /> {/* ← Move it here */}
         </Route>
       </Routes>
     </BrowserRouter>
   );
 }
+
 
 export default App;
 

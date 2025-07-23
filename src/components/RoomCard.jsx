@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import RoomCard from '../components/RoomCard';
-import BrowseHero from '../components/BrowseHero';
+// import BrowseHero from '../components/BrowseHero';
 import axios from 'axios';
 
 const Browse = () => {
@@ -44,9 +44,9 @@ const Browse = () => {
 
   return (
     <>
-      <div className="text-center mt-0 text-2xl text-blue-800">
+      {/* <div className="text-center mt-0 text-2xl text-blue-800">
         <BrowseHero />
-      </div>
+      </div> */}
 
       <div className="max-w-6xl mx-auto px-4 py-10">
         <h2 className="text-3xl font-bold text-center text-blue-800 mb-8">Browse Available Rooms</h2>
