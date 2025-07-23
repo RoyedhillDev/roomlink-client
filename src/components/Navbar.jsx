@@ -19,6 +19,7 @@ const Navbar = () => {
         <Link to="/" className="hover:text-blue-200">Home</Link>
         <Link to="/browse" className="hover:text-blue-200">Browse</Link>
         <Link to="/postaroom" className="hover:text-blue-200">Post a Room</Link>
+        <Link to="/" className="hover:text-blue-200">About</Link>
         {/* User/Login Section */}
         <div className="flex items-center gap-2">
           <FaUserCircle size={24} />
