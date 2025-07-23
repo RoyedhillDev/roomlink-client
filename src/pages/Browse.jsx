@@ -10,22 +10,27 @@ const Browse = () => {
   const [maxPrice, setMaxPrice] = useState(300000);
   const [location, setLocation] = useState('');
   const [onlyAvailable, setOnlyAvailable] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchRooms = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/rooms");
-        const formattedRooms = response.data.map((room) => ({
+        const res = await axios.get('http://localhost:5000/api/rooms');
+        const formatted = res.data.map((room) => ({
           ...room,
-          image: `http://localhost:5000${room.images[0]}`,
+          image: room.images?.length > 0 ? `http://localhost:5000${room.images[0]}` : null,
         }));
-        setRooms(formattedRooms);
-      } catch (error) {
-        console.error("Error fetching rooms: ", error);
+        setRooms(formatted);
+      } catch (err) {
+        console.error('Error fetching rooms:', err);
+        setError('Failed to load rooms. Please try again later.');
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchRooms(); // run only once
+    fetchRooms();
   }, []);
 
   const filteredRooms = rooms.filter((room) => {
@@ -49,7 +54,9 @@ const Browse = () => {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 py-10">
-        <h2 className="text-3xl font-bold text-center text-blue-800 mb-8">Browse Available Rooms</h2>
+        <h2 className="text-3xl font-bold text-center text-blue-800 mb-8">
+          Browse Available Rooms
+        </h2>
 
         {/* Filters */}
         <div className="grid gap-4 mb-8 md:grid-cols-2 lg:grid-cols-4">
@@ -99,7 +106,11 @@ const Browse = () => {
         </div>
 
         {/* Room Display */}
-        {filteredRooms.length > 0 ? (
+        {loading ? (
+          <p className="text-center text-blue-500">Loading rooms...</p>
+        ) : error ? (
+          <p className="text-center text-red-500">{error}</p>
+        ) : filteredRooms.length > 0 ? (
           <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {filteredRooms.map((room) => (
               <RoomCard key={room._id} room={room} />
