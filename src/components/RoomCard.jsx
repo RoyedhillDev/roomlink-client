@@ -1,11 +1,16 @@
-// RoomCard.jsx
 import React from "react";
 
 const RoomCard = ({ room }) => {
+  console.log("ROOM DATA:", room);
+  const imageUrl =
+    room.images && room.images.length > 0
+      ? `http://localhost:5000${room.images[0]}`
+      : "https://via.placeholder.com/300x200?text=No+Image";
+
   return (
     <div className="bg-white border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
       <img
-        src={room.image}
+        src={imageUrl}
         alt={room.title}
         className="w-full h-48 object-cover"
       />
@@ -15,9 +20,7 @@ const RoomCard = ({ room }) => {
         <p className="text-blue-600 font-semibold mb-1">
           {room.price.toLocaleString()} UGX
         </p>
-        <p className={room.available ? "text-green-600" : "text-red-500"}>
-          {room.available ? "Available" : "Unavailable"}
-        </p>
+        <p className="text-green-600">{room.availability}</p>
       </div>
     </div>
   );
