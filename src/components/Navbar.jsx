@@ -8,7 +8,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-yellow-700 text-white px-8 py-3 flex justify-between items-center relative">
+    <nav className="bg-gradient-to-r from-yellow-700 to-yellow-500 text-white px-8 py-3 flex justify-between items-center relative">
       {/* Logo */}
       <Link to="/">
         <img src={logo} alt="Roomlink Logo" className="h-10" />

@@ -88,7 +88,7 @@ const Browse = () => {
             />
             <button
               onClick={handleSearch}
-              className="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700"
+              className="bg-gradient-to-r from-yellow-700 to-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700"
             >
               Search
             </button>
