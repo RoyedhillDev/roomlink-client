@@ -44,7 +44,7 @@ try {
 }
 };
 return (
-<form onSubmit={handleSubmit} className="space-y-4 p-4">
+<form onSubmit={handleSubmit} className="space-y-4 p-4 ">
 <input type="text" placeholder="Room title" value={title} onChange={(e) => setTitle(e.target.value)} required className="w-full border p-2" />
 <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} required className="w-full border p-2" />
 <input type="text" placeholder="Location" value={location} onChange={(e) => setLocation(e.target.value)} required className="w-full border p-2" />
