@@ -13,6 +13,14 @@ const Browse = () => {
   const [maxPrice, setMaxPrice] = useState("");
   const [filteredRooms, setFilteredRooms] = useState([]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const roomsPerPage = 6;
+
+  const indexOfLastRoom = currentPage * roomsPerPage;
+  const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
+  const currentRooms = filteredRooms.slice(indexOfFirstRoom, indexOfLastRoom);
+
+
   useEffect(() => {
     const fetchRooms = async () => {
       try {
@@ -80,7 +88,7 @@ const Browse = () => {
             />
             <button
               onClick={handleSearch}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              className="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700"
             >
               Search
             </button>
@@ -107,10 +115,36 @@ const Browse = () => {
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {filteredRooms.map((room) => (
+          {currentRooms.map((room) => (
             <RoomCard key={room._id} room={room} />
+
+            
           ))}
-        </div>
+
+          </div>
+
+          <div className="flex justify-center mt-6 space-x-2">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50"
+            >
+              Previous
+            </button>
+            <span className="px-3 py-1">{currentPage}</span>
+            <button
+              onClick={() =>
+                setCurrentPage((prev) =>
+                  indexOfLastRoom < filteredRooms.length ? prev + 1 : prev
+                )
+              }
+              disabled={indexOfLastRoom >= filteredRooms.length}
+              className="px-3 py-1 bg-gray-300 rounded disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
+
       </div>
     </div>
   );
