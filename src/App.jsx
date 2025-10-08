@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Browse from './pages/Browse'; // Add this at the top
 import About from './pages/About';
 import PostRoom from './pages/PostaRoom';
-import ViewRooms from './pages/ViewRooms';
+import ViewRooms from './pages/viewRooms';
 
 function App() {
   return (
